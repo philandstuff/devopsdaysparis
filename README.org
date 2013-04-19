@@ -601,3 +601,67 @@
      prod deploy, and how many times you deploy each week/month/year?
      - 15-20 deploys a day
      - fast time-to-prod
+* Pierre-Yves Ritschard, Map vs Territory, a history of visibility
+  - designing 10%, building 20%, corrections 70%
+  - Silos: Dev vs Ops
+  - "Agile": Building then corrections (ie ditch design phase)
+  - Goal: lower defect rates
+  - Visibility
+    - meaningful data (relating to business value)
+    - state data (structured payload)
+    - heterogeneous (not just machine-level. everyone is involved)
+  - Alfred Korzybski - "The map is not the territory"
+  - we want:
+    - Better lifecycle
+    - informed decisions
+    - less maps
+    - more territory (or better maps)
+  - systems are (increasingly) complex
+  - back in 2000
+    - tech: apache/php/mysql
+    - visibility: cpu/memory/bandwidth
+  - now
+    - tech: haproxy/nginx/cassandra/redis/mysql/kitchen sink
+      - split over 27 nodes
+    - visibility: cpu/memory/bandwidth
+  - "how is my business doing?"
+    - "oh, about 6 Gbps"
+      - WAT
+    - what are the /real/ key metrics?
+      - the ones that link back to the business?
+  - metrics & events correlation - across:
+    - system
+    - components
+    - software (stuff we built & stuff we didn't)
+  - lots of small producers, few big consumers
+  - STREAM ALL THE THINGS
+  - anything that happens or moves
+  - consumption:
+    - aggregate
+      - ratios/sums/averages/max
+    - correlate
+      - with eg deploy events, puppet runs etc
+    - decide
+      - track, alert, ignore, scale
+  - implementing this
+    - on premises, SaaS, in between
+    - no magic bullet
+    - on premises
+      - tech
+        - collectd
+        - logstash
+        - graphite
+        - statsd
+        - riemann (more complex, lives in statsd space)
+      - much more effort than SaaS
+  - the path to visibility:
+    - find key metrics
+    - find right tools
+    - event stream
+    - involve everyone
+    - challenge your mental model
+    - goal: improve quality, lower defect rates
+** Q&A
+   - how do you identify key metrics?
+     - top-down
+     - if you're a company, what are you selling?
