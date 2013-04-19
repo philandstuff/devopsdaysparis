@@ -441,3 +441,163 @@
        - see what versions of what apps
        - drill down into artefacts to see what's in place
        - diff between versions
+* Kushal Pisavadia (@KushalP), How we ship software at GOV.UK
+  - Software developer, GDS
+** History of GDS
+   - embedded inside Cabinet office, inside HMG
+   - civil service - 464000, google 55000, BBC 20000
+   - GDS started 18 months ago
+     - developers
+     - designers
+     - writers
+     - policy
+     - comms
+     - operations
+   - Tiny govt dept + web agency + creative agency
+   - "Digital services so good that people prefer to use them"
+     - rather than paper, phone, etc
+   - GDS own the UX end-to-end
+     - focus on user need
+       - not government need
+     - ship fast
+     - measure everything
+   - Martha Lane Fox's report "Revolution, not evolution"
+     1. Build a centre of excellence
+        - this is GDS
+     2. Fix publishing
+     3. Fix transactions
+     4. Go wholesale
+   - Step #1: GOV.UK
+** Different ways we've released software
+*** Summer 2011
+     - Martha's Report arrives
+     - Cabinet Office: "show us"
+*** alpha.gov.uk
+    - shipped in 12 weeks
+    - design principles
+      - start with needs
+      - open source
+        - provide back to community
+        - https://github.com/alphagov
+    - releases: cap deploy
+    - about 4 developers
+    - deploy straight from local machines to single server in AWS
+      - lovingly handcrafted
+*** building the beta
+   - cap deploy couldn't scale
+   - jenkins to provide deployment queue
+     - and provide repeatability
+       1. commit to master
+       2. kick off jenkins build
+       3. tests pass (or fail, and people become noisy)
+       4. create tagged release
+     - big visible build dashboards
+   - acceptance criteria for smoke tests
+     - cucumber tests
+       - alphagov/smokey
+     - eg
+       - Given EFG has booted
+       - and I am benchmarking
+       - when I visit
+       - the elapsed time should be less than 1 second
+     - also used in nagios
+   - configuration management
+     - puppet/chef/pallet
+     - we used puppet
+       - because we knew it
+   - main selling point: faster than other suppliers
+     - met dept
+       - "this is what we'd like. Can you work out if it's
+         possible? let's meet again in a month"
+       - built, shipped in 3 days
+     - break things
+     - devs had sudo access
+*** January 2012: public beta
+    - user needs: when do the clocks change?
+    - go wholesale: public api
+    - make it easier to do the hard things
+      - exposing the release process to the designers
+      - allow design team to deploy static assets straight to prod
+        - fun for them, scary for us
+    - simplify with abstractions
+      - how many people know a scripting language?
+      - how many people quantum mechanics?
+      - scripting languages
+        - VM
+          - machine code
+            - transistors
+              - semiconductors
+                - quantum mechanics
+                  - (c) @nickstenning
+      - puppet abstractions for deploying apps
+        - =govuk::apps::search=
+        - rack application
+          - could be JVM, perl, etc
+        - health check url
+        - sets up:
+          - logging
+          - alerts
+          - load balancing (through healthcheck)
+        - contains a lot of the magic
+*** Getting ready for the October release
+    - Okay, shit gets real now
+    - Removing control
+      - can't give everyone sudo anymore
+    - 2nd line operations
+      - two ops, two devs
+      - enforced rotation each week
+      - gatekeepers to production
+    - release calendar
+      - release application
+      - show what's currently in staging or prod
+*** Shipping it
+    - @psd: "shipped a nation's website. No biggie"
+    - midnight release
+      - flipped over DNS
+    - redirected ALL THE URLS
+      - old bookmarks continued to work
+    - Design of the year award 2013!
+    - International update Rails day
+      - 8th Jan this year
+      - 2030: exploit comes out (CVE hits mailing lists)
+      - 2035: hits internal mailing list
+        - team formed
+        - patched & deployed within 90 minutes
+        - only devs, no ops
+        - noone was on call; people just cared
+** The future
+   - Government is big
+     - Focus on user need
+     - ship fast
+     - measure everything
+   - speed is important, but momentum is everything
+   - https://www.gov.uk/service-manual
+     - devops
+       - multidisciplinary teams working together
+       - solving user needs
+       - not marketing
+       - not consulting
+       - not a "devops team"
+       - you can't be "an agile"; you can't be "a devops"
+** Q&A
+   - Did you get any pushback or internal politics?
+     - the response was "this can't be done" "government is different"
+       "you don't understand our use-case"
+     - we said: "we'll iterate"
+     - instead of talking about it in lengthy meetings, we shipped stuff
+     - if you ship stuff and meet needs, nobody will question you
+   - How did you gather user needs?
+     - Going through server logs
+       - search hits (internal search/google)
+         - where people can't find what they want
+     - user research teams
+       - particularly when closing websites
+       - eg: travel advice
+         - provided reams of information
+         - what people really needed:
+           - they're going travelling
+           - they just want a page to print out
+   - Do you have any metrics on how long it takes from code change to
+     prod deploy, and how many times you deploy each week/month/year?
+     - 15-20 deploys a day
+     - fast time-to-prod
