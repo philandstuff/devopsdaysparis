@@ -1,0 +1,443 @@
+#+TITLE: Devopsdays paris
+
+* Alexis Le-Quoc (CTO DataDog), CustomerOps
+  - @alq @datadoghq
+  - DevOps <3 Customer Support
+  - Everyone has customers
+  - Devops is:
+    - Culture
+    - Automation
+    - Measurement
+    - Sharing
+  - engineering culture
+    - build and understand
+    - learn
+    - 
+  - automation
+    - autoemails
+    - 
+  - measurement
+    - quality
+      - new cases
+      - reopened cases
+    - engagement
+      - time to first response
+      - time to resolution
+      - first contact resolution %
+      - colume per channel
+    - sales
+      - impact of support on sales
+  - sharing
+  - Q&A
+    - how do you prevent your support team from optimizing metrics?
+      - pay is not indexed on metrics
+      - we haven't really had the problem yet
+* A note from the sponsors: Simon Maple, Zero Turnaround
+  - JRebel
+    - eliminates waiting times between coding and seeing results
+  - LiveRebel
+    - orchestration of release management
+    - manages deployment of war file
+* Florian Gilcher (@argorak), How ops improved my dev
+  - "I don't want to be woken up at night, so I call myself a developer"
+  - How did a devops mindset improve the software I write?
+  - In the beginning:
+    - agency job
+    - LAMP stack
+    - Dev/Ops split
+    - wasn't even that bad...
+      - Ops knew what they were doing, didn't want to be bothered by
+        developers at all
+    - breaks down when a project becomes a little bit special
+      - scale (beyond one server)
+    - then: most efficient team was admin + programmer + cup of coffee
+  - example
+    - pull videos from various incoming feeds, aggregate, output
+      - ftp/rss/whatever
+    - one big program import/encode
+    - one program with architecture
+      - import threads
+      - in-memory queue
+      - encoding
+    - split into several processes
+      - importers
+      - persistent queue
+      - encoders
+    - dev perspective
+      - first is easiest to implement
+      - last one is hardest to implement
+    - ops perspective
+      - first is hardest to operate
+        - not much introspection (eg how full is the queue?)
+        - if one part fails, whole system fails
+      - last one is simplest to operate
+  - code written for infrastructure
+    - follow conventions that the ops team will understand
+    - external quality > internal quality
+      - (interfaces!)
+    - My ugliest piece of code ran for 1.5 years in prod with no changes.
+      - nobody cared
+  - "Ease of setup" is a red flag
+    - prevalent in database world
+    - problematic later. complexity is hidden
+    - you might miss things along the way
+  - "ease of non-trivial configuration" - much more important
+  - set up a production-like system early on
+    - get ops involved at this point
+    - keep tally marks on how often it leaves you puzzled
+  - everything before this is just a hobby
+  - big bangs always happen in production
+    - expensive loadbalancers that die during configuration and need
+      to be sent back to the manufacturers
+  - teams need to get used to their own systems
+  - metrics & logging are important
+    - but most dev teams underrate them and leave them late and poor
+    - should be there from day one
+    - "we'll implement that later"
+  - internal tooling can save you a lot of work
+    - need creative ways to talk about it
+  - problems of strict roles
+    - platform refactorings
+      - get political very quickly
+      - lack of skill
+    - code reviews
+      - not enough staff that "is qualified" to review certain code
+  - devops mindset takes away friction
+  - Q&A
+    - how do you avoid needing everyone to know everything?
+      - breaking down role boundaries isn't about enforcing everyth
+* Rémy-Christophe Schermesser: Project or Product?
+  - Project
+    - Activity
+    - action
+    - specific need
+    - time
+    - budget envelope
+    - it dept
+  - Product
+    - creative activity
+    - satisfies needs
+    - client
+  - employees are end users
+  - users = team + end users
+  - Learn->build->measure->learn
+  - Think Product. Do Project.
+* Fabrice Bernhard: transforming devs into devops
+** back to basics: why devops?
+    - much slower and riskier than can be estimated
+    - 1 project in 6 cost 3x more than expected
+    - large-scale compute spend 20x more likely to spiral out of
+      control than expected (than what?)
+    - FoxMeyer Drugs' bankruptcy after switching brutally to SAP
+    - Black swans (really?)
+      - bell curves and kurtosis
+    - Small iterations reduce risk
+      - if it's going horribly wrong, cut your losses
+    - devops is natural conclusion of lean startup thinking
+** dev to devops-friendly: things that work
+    - typical junior dev knows nothing about ops
+      - learnt java at uni
+      - uses windows (for games)
+      - has installed linux for curiosity
+      - maintained a website for a uni club
+        - uploaded files using FileZilla/CuteFTP
+    - First skills are easy to teach a dev
+      - linux
+      - git (not poisoned by CVS)
+      - git branching
+      - scrum
+      - unit and functional tests
+    - Shit gets real with deployment and provisioning
+      - shell scripts :(
+      - capistrano - magic :(
+      - fabric - good compromise?
+      - every project has a deploy.py script in a =devops= folder
+      - everyone can now deploy
+      - juniors seem to check if there is an experienced guy around
+        before deploying...
+        - do they not trust the rollback system?
+    - Asked sysadmin-knowledgable devs: how did you learn?
+      - "I imrpoved a lot when I started renting my own server"
+      - To acquire experience, you need sandboxes for devs
+      - new instance per project
+      - easy to reset
+      - IaaS!
+      - we have a homemade IaaS platform as the testing server
+        - multiple opportunities for a dev to play with a clean linux
+          environment
+    - scripted provisioning must stay simple!
+      - "it's become so complicated since my CuteFTP days, that even
+        the senior devops-type folk don't know what to use"
+      - 80% of needs: install packages, modify config files
+        - typically on one server
+      - not the use-case of chef server/puppetmaster: designed for clusters
+      - chef-solo: a "who writes the most magical Ruby" contest
+      - puppet/chef modules: do they actually work out of the box?
+        - too much abstraction anyway (what?)
+      - fabtools: easy and dev-friendly! not very standard
+    - vagrant!
+      - awesome!
+      - tiny issues on the file-sharing
+** devops-friendly to devops: the hard part
+    - deep cultural differences
+      - DHH vs Stallman
+      - "Touching a server is risky"
+      - sysadmins should always pair with devs
+      - scrum-compatible? yes (apparently)
+      - PS: hire devs who are eager to learn!
+    - Some issues are constraints for developing fast
+      - TDD (in the view of a junior dev)
+      - Performance 
+      - Provisioning
+      - Scaling
+      - Backups
+      - none of these matter in a dev environment
+    - Use visual management as a natural incentive
+      - Make performance constraints part of DONE definition
+        - if you expect 500ms page load times, but you don't write it
+          down, how else do you make it happen?
+      - Include performance solutions in the standard provisioning
+        - if you're using varnish in production, and want devs to use
+          correct caching headers, need varnish in development
+      - do visible perfomance graphs
+    - Make scaling cool
+      - The power of NoSQL: devs have to think the model in a scalable way
+        - dev doesn't have option of making this amazing 50-line SQL query
+        - scalable by default
+      - IaaS is infrastructure with an API...awesome!
+    - How do you get devs to feel responsible for production?
+      - why do ops feel /that/ responsible, and not devs?
+      - dev: "it's not my job"
+      - (is it the "devops" job?)
+    - What about backups and server monitoring?
+      - "I push the backup button in the GUI of my VPS"
+      - "I check the response time in Pingdom after every big
+        event. If it is too high I know it is time to do something."
+      - For devs turned into devops, SaaS is the solution:
+        - newrelic
+        - pingdom
+        - Idera ServerBackup
+      - And for bigger needs? personally I turn to real ops
+** Q&A
+    - what's the right ratio for dev/ops in a scrum team?
+      - in my example, ops was an outside expert, not part of the team
+      - the solution was: when an outside expert is needed, make him pair
+* Ignites
+** Oliver White
+   - Infrastructure improvements, support, firefighting
+   - Devops spends 33% more time improving infrastructure than
+     traditional ops
+   - Traditional IT Ops require nearly 60% more time supporting
+   - Devops spends 21% less time putting out fires
+   - yay!
+   - Devops spend more time on self-improvement
+   - devops recover from failures faster
+   - devops need less than half the time to release an application (36
+     min vs 86 min)
+   - devops spends more time improving things and less time fixing things
+   - top tools
+     - sh
+     - se
+     - vim
+     - nagios
+     - puppet
+     - python
+     - chef
+   - config tools
+     - puppet 40%
+     - chef 31%
+     - bash
+     - cfengine
+     - ansible
+     - fabric
+   - test automation
+     - se
+     - junit
+     - custom
+     - jmeter
+     - jenkins
+     - soapui
+     - rspec
+   - monitoring
+     - nagios
+     - custom
+     - newrelic
+     - zabbix
+     - graphite
+     - pingdom
+     - munin
+   - devops wins! but still isn't perfect
+     - failures due to: software quality or lack of automation
+   - report is available to everyone for free
+** OCTO
+   - premature optimization is the root of all evil
+   - stop guessing
+     - eg using for (;;) loops instead of for (o : os) loops
+   - the last mile problem: performance
+     - architecture
+     - development
+     - performance test
+     - go live!
+     - except performance sucks
+     - massive project delays
+       - only realized at the last minute
+   - there is a better way
+** SERENA: The lost paradise of devops
+   - I have lived there
+     - when I was young, I was managing things all the way from dev to prod
+   - what happened? the Original Sin
+     - overcommitment
+     - too many bugs
+     - and God said: structured waterfall
+   - tower of babel
+     - specialization to win
+     - but specialists developed different languages
+   - we can't go back, because the complexity is here
+     - we need the specialists
+   - flood of projects
+   - you have to be moses and open the red sea
+** Karanbir Singh http://www.karan.org
+   - Project Raindrops
+   - kickstart file
+   - config file for type of hypervisor etc
+   - create a job which defines config + kickstart, get an image
+   - image generation aaS - awesome
+   - user pickup by default
+     - raindrops can set up aws image for you
+   - builds happen on real hypervisors
+   - lessons from first few days:
+     - bitcoin miners
+     - spambots
+     - proxies from china & iran
+   - http://projectraindrops.net/
+** Pat Debois, What if devops was invented by coca cola?
+   - A cure for everything!
+   - nobody knows the secret formula
+   - celebrate delivery
+   - communication
+   - automation
+   - measuring
+   - sharing
+   - test driven
+   - devops/noops/infracoders
+   - the end users love it
+   - solve your own bottleneck, adapt it to your needs.
+* Open space, Platform Refactoring
+  - How do you handle refactoring which spans more than one app, more
+    than one team, more than one API boundary?
+  - eg: multiple interconnected webapps, each maintained by a
+    different team.
+  - Step 1: simplify. Kill features! Features carry a cost, and if
+    they are harming performance, they may not be carrying their
+    weight
+  - API versioning
+    - Branch by abstraction for APIs:
+      - start with frontend hitting API-v1
+      - introduce API-v2
+      - gradually migrate frontend from using API-v1 to API-v2, one call
+        at a time
+      - check it all works
+      - remove API-v1
+    - semantic versioning -- communicate when your APIs break
+      - only really viable if you have confidence that your test suite
+        will catch breaking changes
+    - API versioning can be problematic for legacy reasons. If you're
+      close to your API consumers, it's easy to drop old API
+      versions. If you're far removed (say, with a public API), you
+      may have to keep maintaining multiple API versions for a long time
+      - though one way to alleviate this can be to reimplement API v1
+        as a shim on API v2; that way, you have much less code to
+        maintain and (more importantly) less duplication
+  - Team interplay
+    - If I'm a frontend dev and I want to instigate a change to a
+      backend API, how should I go about it?
+      - fork the repo and JFDI!
+        - but get it reviewed by the backend team
+      - go over and pair with someone from the backend team for a while
+      - good communication is key -- your JavaScript developer may not
+        have the ability to just fix it themselves; but they should feel
+        able to approach backend team for help
+    - How do application developers get feedback about production
+      performance?
+      - Who deploys the code?
+        - if devs are deploying their own code, they should also be
+          watching the monitoring as they deploy it
+        - this builds up familiarity with the metrics relevant to
+          their app
+        - then the devs know if their app is worsening in performance
+        - issue: there may be 20,000 graphs. The ops will have much
+          more knowledge than the devs in how to wade through all this
+          data, but the devs should be more directly interested in the
+          data specific to their app.
+          - mitigation: pair an ops and a dev on making a dashboard
+          - devs & QAs to own the dashboard
+        - ideas for metrics:
+          - response time
+          - SQL query time
+          - disk, cpu, memory
+          - iowait
+* Open space: devops and kanban
+  - Kanban wall:
+    - columns
+    - limited WIP
+    - optimize for throughput
+    - if you hit a WIP limit, stop the line and fix the blockage
+  - sharing information internally
+    - wiki
+    - example: developer configuring logstash, simultaneously writes
+      wiki page for logstash
+  - "we're an ops team but we have CI specialists and production
+    specialists. would we need one kanban board or two?"
+    - kanban works for cross-functional teams
+      - anyone can pick up any story
+      - if you violate this, your velocity may become misleading
+      - eg CI folks consistently do a 1-point story 3x faster than
+        production folks; velocity will become skewed by prod folks
+  - how do you handle interrupt-driven work within kanban?
+    - ie if you're at a WIP limit, how do you handle an urgent
+      production outage?
+    - make kanban work for you; don't become a slave to it
+      - if WIP limit is preventing you from working, increase it
+        - but what's the point of a WIP limit if you just raise it
+          when you hit it? Isn't it trying to tell you something?
+          - if you hit a WIP limit, yes you should investigate
+            why. Correct action will depend
+            * if someone's struggling with their story, stop the line
+              & help them?
+            * too many outstanding pull requests and not enough people
+              reviewing - JFDI
+            * team is working well, but some people have nothing to do
+              -- raise WIP limit
+    - can have an "urgent" lane for interrupts
+    - drop an existing task to a "blocked" column to make room for the
+      urgent task
+    - how does this happen in scrum vs kanban?
+      - in scrum, if I have a production outage which my most senior
+        dev takes on, I can look to reduce our commitment for the
+        sprint in order to communicate the loss of capacity to the
+        stakeholders. How does kanban cope?
+      - iterations are an accounting tool. you measure velocity and
+        use yesterday's weather to do planning. If you think you've
+        taken a hit, you can communicate an expectation of a reduced
+        velocity for the iteration.
+* ZeroTurnaround demos
+** JRebel demo
+   - maven project in eclipse
+   - tomcat (with jrebel) running
+   - edit JSPs & properties file & save
+     - instantly see results in tomcat
+   - edit java validation logic & save
+     - ditto
+   - HotSpot can do some of these things, but JRebel can do advanced
+     things such as big refactorings, adding classes, deleting classes, etc
+** LiveRebel demo
+   - orchestration
+   - releases should be testable, reversible, automated, consistent
+   - command centre
+   - build artefact for an app (code+db+conf)
+   - one-stop mgmt console
+     - see what's currently deployed to any given server
+     - app view:
+       - see what versions of what apps
+       - drill down into artefacts to see what's in place
+       - diff between versions
