@@ -815,7 +815,8 @@ right-hand two quadrants! I'd like to try this again sometime.
 
 Oliver White presented a report from Rebel Labs (
 http://zeroturnaround.com/rebellabs/ ) on a survey of various
-traditional ops and devops teams.
+traditional ops and devops teams (available here, signup required:
+http://zeroturnaround.com/rebellabs/ops/it-ops-devops-productivity-report-2013/ )
 
 It was divided into four parts:
    1. work week (ie what proportion of your week do you spend doing X?)
