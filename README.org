@@ -665,3 +665,165 @@
    - how do you identify key metrics?
      - top-down
      - if you're a company, what are you selling?
+* Alain Delafosse and Olivier Lefaucheux/Eric Mattern
+** 10 major traps to avoid during a devops transition
+   1. Thinking it's only tooling
+      - also needs processes and culture
+      - culture is key
+   2. Start with the wrong tooling strategy
+      - build your own solution
+        - fits requirements
+        - requires integration work
+      - deployment tool
+      - appliance images
+      - PaaS
+   3. Think only server deployment
+      - Configuration management
+      - orchestration
+      - Command FW
+        - puppet
+        - chef
+        - salt
+        - ansible
+        - cap
+        - fabric
+        - rundeck
+        - control tier
+        - cfengine
+        - func
+        - mcollective
+   4. Trying to fully automate data and database upgrades
+   5. Focus on rebranding as "DevOps"
+      - Don't
+        - rename teams
+        - set DevOps as title or function
+        - create a new team
+      - Do
+        - forget the name
+        - empower your teams to foster the transition
+   6. 
+   7. If you don't measure it, you can't value it
+      - define goals
+      - find metrics
+      - expose KPIs
+   8. Forget CI loops
+      - devops is an endless journey
+      - set up a CI loop: tools and processes
+      - backlog -> improve -> feedback -> formalize and categorize
+   9. Focus only on deployment process
+      - There are loads more areas where dev/ops collaboration makes sense
+      - #monitoringsucks
+        - common dashboards using ops, dev and biz metrics
+        - stop servercentric
+        - log management
+        - monitoring == test (cucumber-nagios)
+      - Performance management
+        - autoscaling
+        - scalability
+      - Incident/problem management
+        - bring dev into room when incidents are popping
+      - BCP/DRP design (what?)
+      - security
+   10. conflict with ITIL
+       - Some prod environments do require strong service management
+       - change management
+         - puppet/chef + vcs
+       - release management
+         - deployment tools
+       - capacity management
+       - service continuity management
+* Ignites
+** @philandstuff
+   - notes to follow..
+** R. Di Cosmo
+   - cloud:
+     - the promise: automatic everything
+     - the reality: long, detailed, manual descriptions of the whole
+       system
+   - Aeolus
+     - creating architecture through contraint solving
+       - O_O
+     - create toolbox
+       - appservers
+       - load balancers
+       - databases
+     - each thing requires
+   - Zephyrus
+   - problems of undecidability
+   - http://www.aeolusproject.org/
+* Open spaces, day 2
+** Pat Debois, value stream mapping from monitoring
+This session was really interesting. It was run as a workshop by
+Pat. He divided us into groups of 4-5, and asked us to focus on the
+infrastructure of one of the group members. We mapped their
+infrastructure out on the wall using sticky notes in four steps:
+*** Production infrastructure
+First, we mapped out all of the infrastructure we had in our
+production environment, starting from how an end-user would enter our
+system (by convention, from the top of the diagram). Equipment such as
+firewalls, load balancers, application servers, databases of various
+kinds, message queues, mail servers, monitoring servers, puppet
+masters were all listed, along with their dependencies and
+communication channels.
+
+Other things which were on this diagram were external dependencies
+such as mail-sending services (like Amazon SES), third party
+monitoring providers, and external APIs we connect to.
+
+We were also encouraged to identify three key business processes, and
+mark those systems which are critical to those processes.
+
+*** Helpdesk process
+The second step was to map what the process was for a user to resolve
+a problem they were having. Who do they speak to, and how do things
+get escalated to team members?
+
+This included roles such as helpdesk, sysadmin, DBA, developer,
+third-party suppliers (eg cloud provider support), third-party
+specialists (eg Oracle or Cisco specialists).
+
+*** Deployment pipeline
+The third step was to map the infrastructure required to get code into
+production. Build servers, test environments, artefact repositories,
+that sort of thing.
+
+*** Development process
+The fourth and final step was to map the process and people involved
+in a code change by a developer is allowed to go through to
+production. BAs, QAs, product owners, change managers, sysadmins are
+all roles which might appear at this step.
+
+The four diagrams were put on the wall in four quadrants of an overall
+diagram:
+
+| Deployment infrastructure | Production infrastructure     |
+|---------------------------+-------------------------------|
+| Development process       | User issue resolution process |
+
+There's a nice pattern that has emerged here; you can see it like
+this:
+
+| Development infrastructure | Production infrastructure |
+|----------------------------+---------------------------|
+| Development process        | Production process        |
+
+This exercise was really interesting, though probably too involved for
+a half-hour open space session as nobody got beyond discussing the
+right-hand two quadrants! I'd like to try this again sometime.
+
+** Rebel Labs ops report
+
+Oliver White presented a report from Rebel Labs (
+http://zeroturnaround.com/rebellabs/ ) on a survey of various
+traditional ops and devops teams.
+
+It was divided into four parts:
+   1. work week (ie what proportion of your week do you spend doing X?)
+   2. failures and recoveries
+   3. tools
+   4. software releases
+
+It was a really good session, though it probably isn't fair to try to
+summarize it here as the real meat was in all the detail which I
+didn't manage to capture.
+
